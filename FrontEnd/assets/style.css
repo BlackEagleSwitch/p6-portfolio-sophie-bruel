@@ -134,6 +134,17 @@ table {
 	border-spacing: 0;
 }
 
+a {
+	text-decoration: none;
+	font-weight: 400;
+	color: black;
+}
+
+input {
+	font-family: 'Work Sans', sans-serif;
+	outline: none;
+}
+
 /** end reset css**/
 body {
 	max-width: 1400px;
@@ -162,9 +173,10 @@ section {
 h1 {
 	display: flex;
 	flex-direction: column;
-	font-family: 'Syne', sans-serif;
-	font-weight: 800;
 	font-size: 22px;
+	font-weight: 800;
+	font-family: 'Syne', sans-serif;
+	user-select: none;
 	color: #B1663C;
 }
 
@@ -194,8 +206,12 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	font-weight: 600;
+	cursor: pointer;
+	user-select: none;
 }
 
+li a:hover,
 li:hover {
 	color: #B1663C;
 }
@@ -208,6 +224,7 @@ li:hover {
 	justify-content: center;
 	background-color: black;
 	color: white;
+	display: none;
 }
 
 #banderolle p {
@@ -351,7 +368,67 @@ input[type="submit"] {
 	color: white;
 }
 
+.login {
+	display: flex;
+	flex-direction: column;
+}
+
+.login h2{
+	margin: 100px auto 7px;
+}
+
+.login label{
+	margin: 30px calc(50% - 189.5px) 6px;
+}
+
+.login input{
+	width: 379px;
+	height: 51px;
+	border: none;
+	margin: auto;
+	font-size: 24px;
+	box-shadow: 0 4px 14px #00000017;
+}
+
+.login button{
+	width: 179px;
+	height: 36px;
+	border-radius: 23px;
+	font-family: 'Syne', sans-serif;
+	border: solid 1px #1D6154;
+	background-color: #1D6154;
+	margin: 37px auto 28px;
+	cursor: pointer;
+	transition: .3s;
+	color: white;
+}
+
+.login button:hover {
+	background-color: white;
+	color: #1D6154;
+}
+
+.login a{
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	margin: 0 auto 355px;
+	transition: .2s;
+}
+
+.login a:hover {
+	text-underline-offset: 1px;
+	color: #B1663C;
+}
+
+.admin {
+	display: none;
+}
+
 footer {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: end;
 	background-color: #fff;
 }
 
