@@ -1,11 +1,9 @@
 const gallery = document.querySelector('.gallery');
 const divFilters = document.querySelector('.filters');
-
-const shadow = document.querySelector('.shadow');
-const modale = document.querySelector('.modale');
-
 const banderolle = document.querySelector('#banderolle');
 const admin = document.querySelectorAll('.admin');
+const shadow = document.querySelector('.shadow');
+const modale = document.querySelector('.modale');
 
 const token = sessionStorage.getItem('token');
 if (token) {
@@ -115,11 +113,24 @@ function openModale(dataWorks) {
         const divModale = document.querySelector('.divModale');
         createFigure(dataWorks, divModale);
 
+        const figures = divModale.children;
+        for (let figure of figures) {
+            const del = document.createElement('i');
+            del.className = 'fas fa-ban';
+            figure.appendChild(del);
+        }
+
+        const btnDelete = document.querySelectorAll('.fa-ban');
+        for (let i = 0; i < btnDelete.length; i++) {
+            btnDelete[i].value = dataWorks[i].id;
+        }
+
         const figuresModale = document.querySelectorAll('.divModale figure figcaption');
         for (let figcaption of figuresModale) {
             figcaption.textContent = "éditer";
         }
-        pageTwoModale();        
+        pageTwoModale(); 
+        deleteFigure();       
     });
 }
 
@@ -165,4 +176,18 @@ function pageTwoModale() {
             <input type="file">
         `;
     });
+}
+
+function deleteFigure() {
+    const allDelete = document.querySelectorAll('.fa-ban');
+    for (let btn of allDelete) {
+        btn.addEventListener('click', () => {
+            const id = btn.value;
+            
+            fetch(`http://localhost:5678/api/works/${id}`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${token}` },
+            });
+        });
+    }
 }

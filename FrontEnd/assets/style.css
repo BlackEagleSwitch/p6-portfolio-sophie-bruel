@@ -540,7 +540,7 @@ input[type="submit"] {
 .modale .addPicture {
 	background-color: #1D6154;
 	border: solid 1px #1D6154;
-	margin: auto;
+	margin: 0 auto 23px;
 }
 
 .modale .addPicture:hover {
@@ -553,7 +553,7 @@ input[type="submit"] {
 	height: unset;
 	color: #D65353;
 	font-weight: 400;
-	margin: 23px auto 18px;
+	margin: 0 auto 18px;
 }
 
 .modale .supGallery:hover {
@@ -584,6 +584,27 @@ input[type="submit"] {
 
 .divModale figure figcaption {
 	font-size: 12px;
+}
+
+.divModale figure i {
+	width: 17px;
+	height: 17px;
+	font-size: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+	border-radius: 2px;
+	color: white;
+	transition: .2s;
+	cursor: pointer;
+	position: absolute;
+	top: 6px;
+	right: 6px;
+}
+
+.divModale figure i:hover {
+	opacity: .7;
 }
 
 .divModale input,
