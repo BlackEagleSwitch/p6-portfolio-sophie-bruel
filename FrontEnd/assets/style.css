@@ -418,6 +418,20 @@ input[type="submit"] {
 	box-shadow: 0 4px 14px #00000017;
 }
 
+.login h3 {
+	width: 379px;
+	height: 51px;
+	display: flex;
+	font-size: 16px;
+	align-items: center;
+	justify-content: center;
+	background-color: #ea8888;
+	border-radius: 4px;
+	color: white;
+	margin: 35px auto 0;
+	display: none;
+}
+
 .login button{
 	width: 179px;
 	height: 36px;
