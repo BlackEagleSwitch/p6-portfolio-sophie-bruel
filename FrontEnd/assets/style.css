@@ -229,6 +229,8 @@ li:hover {
 	justify-content: center;
 	background-color: black;
 	color: white;
+	position: relative;
+	z-index: 1;
 	display: none;
 }
 
@@ -460,6 +462,118 @@ input[type="submit"] {
 .login a:hover {
 	text-underline-offset: 1px;
 	color: #B1663C;
+}
+
+.shadow {
+	width: 100%;
+	height: 100%;
+	max-width: 1400px;
+	background-color: #00000017;
+	position: fixed;
+	top: 0;
+	display: none;
+}
+
+.modale {
+	width: 630px;
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	border-radius: 10px;
+	padding: 30px;
+	position: absolute;
+	left: calc(50% - 315px);
+	top: 601px;
+	display: none;
+}
+
+.modale span {
+	display: flex;
+	font-size: 20px;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+
+.modale span i {
+	transition: .2s;
+	cursor: pointer;
+}
+
+.modale span i:hover {
+	opacity: .6;
+}
+
+.modale span .fa-arrow-left {
+	position: relative;
+}
+
+.modale h2 {
+	font-size: 26px;
+	font-weight: 400;
+	text-align: center;
+	font-family: 'Work Sans', sans-serif;
+}
+
+.modale .divModale {
+	width: 420px;
+	display: flex;
+	padding-bottom: 47px;
+	margin: 46px auto 38px;
+	border-bottom: solid 1px #B3B3B3;
+}
+
+.modale button {
+	width: 237px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	font-weight: 700;
+	font-family: 'Syne', sans-serif;
+	border-radius: 20px;
+	color: white;
+}
+
+.modale .addPicture {
+	background-color: #1D6154;
+	border: solid 1px #1D6154;
+	margin: auto;
+}
+
+.modale .supGallery {
+	width: unset;
+	height: unset;
+	color: #D65353;
+	font-weight: 400;
+	margin: 23px auto 18px;
+}
+
+.modale .validation {
+	background-color: #A7A7A7;
+	border: solid 1px #A7A7A7;
+	margin: 0;
+}
+
+.pageOne {
+	row-gap: 12px;
+	flex-wrap: wrap;
+	column-gap: 10px;
+	align-content: flex-start;
+}
+
+.divModale figure {
+	position: relative;
+}
+
+.divModale figure img {
+	width: 76px;
+	height: 102px;
+	object-fit: cover;
+}
+
+.divModale figure figcaption {
+	font-size: 12px;
 }
 
 .admin {

@@ -1,5 +1,9 @@
 const gallery = document.querySelector('.gallery');
 const divFilters = document.querySelector('.filters');
+
+const shadow = document.querySelector('.shadow');
+const modale = document.querySelector('.modale');
+
 const banderolle = document.querySelector('#banderolle');
 const admin = document.querySelectorAll('.admin');
 
@@ -28,19 +32,20 @@ async function main() {
     const dataWorks = await getWorksAPI();
     const dataCategory = await getCategoryAPI();
 
-    createFigure(dataWorks);
+    createFigure(dataWorks, gallery);
     filters(dataCategory, dataWorks);
+    openModale(dataWorks);
 }
 main();
 
-function createFigure(dataWorks) {
+function createFigure(dataWorks, container) {
     for (let data of dataWorks) {
         const figure = document.createElement('figure');
         figure.innerHTML = `
             <img src="${data.imageUrl}">
             <figcaption>${data.title}</figcation>
         `;
-        gallery.appendChild(figure);
+        container.appendChild(figure);
     }
 }
 
@@ -86,4 +91,33 @@ function colorFilters(actif) {
     }
     actif.style.backgroundColor = "#1D6154";
     actif.style.color = "white";
+}
+
+function openModale(dataWorks) {
+    const btnModale = document.querySelector('.btnModale');
+    btnModale.addEventListener('click', () => {
+        shadow.style.display = "flex";
+        modale.style.display = "flex";
+        modale.innerHTML = `
+            <span>
+                <i class="fa-solid fa-arrow-left"></i>
+                <i class="fa-solid fa-xmark"></i>
+            </span>
+            <h2>Galerie photo</h2>
+            <div class="divModale pageOne"></div>
+            <button class="addPicture">Ajouter une photo</button>
+            <button class="supGallery">Supprimer la galerie</button>
+        `;
+
+        const btnReturn = document.querySelector('.fa-arrow-left');
+        btnReturn.style.zIndex = "-2";
+        
+        const divModale = document.querySelector('.divModale');
+        createFigure(dataWorks, divModale);
+
+        const figuresModale = document.querySelectorAll('.divModale figure figcaption');
+        for (let figcaption of figuresModale) {
+            figcaption.textContent = "éditer";
+        }        
+    });
 }
