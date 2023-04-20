@@ -1,5 +1,16 @@
 const gallery = document.querySelector('.gallery');
 const divFilters = document.querySelector('.filters');
+const banderolle = document.querySelector('#banderolle');
+const admin = document.querySelectorAll('.admin');
+
+const token = sessionStorage.getItem('token');
+if (token) {
+    for (let value of admin) {
+        value.style.display = "flex";
+    }
+    banderolle.style.display = "flex";
+    divFilters.style.display = "none";
+}
 
 async function getWorksAPI() {
     const getWorks = await fetch("http://localhost:5678/api/works");
