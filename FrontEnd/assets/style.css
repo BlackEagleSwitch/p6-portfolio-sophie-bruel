@@ -641,6 +641,15 @@ input[type="submit"] {
 	top: 0;
 }
 
+.backBlue .preview img {
+	width: 129px;
+	height: 100%;
+	object-fit: cover;
+	position: absolute;
+	left: calc(50% - 64.5px);
+	top: 0;
+}
+
 .backBlue input {
 	opacity: 0;
 	cursor: pointer;

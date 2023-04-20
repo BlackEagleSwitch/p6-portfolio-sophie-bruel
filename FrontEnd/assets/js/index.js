@@ -175,6 +175,7 @@ function pageTwoModale() {
             <div class="preview"></div>
             <input type="file">
         `;
+        addNewFigure();
     });
 }
 
@@ -189,5 +190,48 @@ function deleteFigure() {
                 headers: { "Authorization": `Bearer ${token}` },
             });
         });
+    }
+}
+
+function addNewFigure() {
+    const btnValidation = document.querySelector('.addPicture');
+    const inputFile = document.querySelector('input[type=file]');
+
+    inputFile.addEventListener('change', (input) => {
+        const imgUrl = input.target.files[0];
+        btnValidation.style.backgroundColor = "#1D6154";
+        previewImg(imgUrl);
+    });
+
+    btnValidation.addEventListener('click', () => {
+        const img = inputFile.files[0];
+        const category = document.querySelector('select').value;
+        const title = document.querySelector('.divModale input[type=text]').value;
+
+        const data = new FormData();
+        data.append("image",img);
+        data.append("title", title);
+        data.append("category", category);
+
+        fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${token}` },
+            body: data
+        });
+    });
+}
+
+function previewImg(imgUrl) {
+    const btnHide = document.querySelector('.backBlue b');
+    const preview = document.querySelector('.preview');
+    const img = document.createElement('img');
+    btnHide.style.display = "none";
+    preview.style.zIndex = "2";
+
+    const url = new FileReader();
+    url.readAsDataURL(imgUrl);
+    url.onload = function(url) {
+        img.src = url.target.result;
+        preview.appendChild(img);
     }
 }
