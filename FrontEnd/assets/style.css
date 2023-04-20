@@ -181,6 +181,10 @@ h2 {
 	color: #1D6154;
 }
 
+p {
+	font-family: 'Work Sans', sans-serif;
+}
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -196,6 +200,36 @@ li:hover {
 	color: #B1663C;
 }
 
+#banderolle {
+	height: 59px;
+	display: flex;
+	column-gap: 21px;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+	color: white;
+}
+
+#banderolle p {
+	font-size: 16px;
+}
+
+#banderolle p::before {
+	content: "\f044";
+	font-weight: 100;
+	font-family: "Font Awesome 5 Free";
+	margin-right: 10px;
+}
+
+#banderolle button {
+	font-size: 14px;
+	font-weight: 600;
+	font-family: 'Work Sans', sans-serif;
+	background-color: white;
+	border-radius: 60px;
+	padding: 11px 23px;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -205,10 +239,15 @@ li:hover {
 	flex: 1;
 }
 
-#introduction img {
+#introduction figure img {
 	display: block;
 	margin: auto;
 	width: 80%;
+}
+
+#introduction figure p {
+	margin: 10px 0 0 10%;
+	cursor: pointer;
 }
 
 #introduction article {
@@ -219,13 +258,37 @@ li:hover {
 	margin-bottom: 1em;
 }
 
-#introduction p {
+#introduction article p {
 	margin-bottom: 0.5em;
 }
 
 #portfolio h2 {
-	text-align: center;
+	display: flex;
+	column-gap: 31px;
+	align-items: center;
+	justify-content: center;
 	margin-bottom: 1em;
+}
+
+#portfolio h2 p {
+	font-size: 14px;
+	font-weight: 400;
+	font-family: 'Work Sans', sans-serif;
+	cursor: pointer;
+	color: black;
+}
+
+#introduction figure p::before,
+#portfolio h2 p::before {
+	content: "\f044";
+	font-weight: 100;
+	font-family: 'Font Awesome 5 Free';
+	margin-right: 8px;
+}
+
+#introduction figure p:hover,
+#portfolio h2 p:hover {
+	opacity: .6;
 }
 
 .gallery {
