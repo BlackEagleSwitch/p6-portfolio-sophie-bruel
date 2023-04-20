@@ -111,13 +111,58 @@ function openModale(dataWorks) {
 
         const btnReturn = document.querySelector('.fa-arrow-left');
         btnReturn.style.zIndex = "-2";
-        
+
         const divModale = document.querySelector('.divModale');
         createFigure(dataWorks, divModale);
 
         const figuresModale = document.querySelectorAll('.divModale figure figcaption');
         for (let figcaption of figuresModale) {
             figcaption.textContent = "éditer";
-        }        
+        }
+        pageTwoModale();        
+    });
+}
+
+function pageTwoModale() {
+    const button = document.querySelector('.addPicture');
+    button.addEventListener('click', () => {
+        const btnReturn = document.querySelector('.fa-arrow-left');
+        const titleModale = document.querySelector('.modale h2');
+        titleModale.textContent = "Ajout photo";
+        btnReturn.style.zIndex = "0";
+
+        const contModale = document.querySelector('.pageOne');
+        contModale.classList.remove('pageOne');
+        contModale.classList.add('pageTwo');
+
+        const divModale = document.querySelector('.divModale');
+        divModale.innerHTML = `
+            <div class="backBlue"></div>
+            <label>Titre</label>
+            <input type="text">
+            <label>Catégorie</label>
+            <select>
+                <option value="1">Objets</option>
+                <option value="2">Appartements</option>
+                <option value="3">Hotels & restaurants</option>
+            </select>
+        `;
+
+        const btnSupGallery = document.querySelector('.supGallery');
+        btnSupGallery.remove();
+
+        const btnValidation = document.querySelector('.addPicture');
+        btnValidation.style.backgroundColor = "#A7A7A7";
+        btnValidation.style.border = "solid 1px #A7A7A7";
+        btnValidation.textContent = "Valider";
+
+        const backBlue = document.querySelector('.backBlue');
+        backBlue.innerHTML = `
+            <i class="far fa-image"></i>
+            <b>+ Ajouter photo</b>
+            <p>jpg, png : 4mo max</p>
+            <div class="preview"></div>
+            <input type="file">
+        `;
     });
 }
