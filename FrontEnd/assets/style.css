@@ -2,88 +2,16 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+html,body,div,span,applet,object,iframe,
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,
+acronym,address,big,cite,code,del,dfn,em,
+img,ins,kbd,q,s,samp,small,strike,strong,
+sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,
+li,fieldset,form,label,legend,table,caption,
+tbody,tfoot,thead,tr,th,td,article,aside,
+canvas,details,embed,figure,figcaption,footer,
+header,hgroup,menu,nav,output,ruby,section,
+summary,time,mark,audio,video {
 	font: inherit;
 	font-size: 100%;
 	vertical-align: baseline;
@@ -93,17 +21,8 @@ video {
 }
 
 /* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
 	display: block;
 }
 
@@ -347,8 +266,9 @@ li:hover {
 }
 
 .gallery img {
-	width: 100%;
-
+	width: 366px;
+	height: 487px;
+	object-fit: cover;
 }
 
 #contact {
@@ -522,6 +442,19 @@ input[type="submit"] {
 	border-bottom: solid 1px #B3B3B3;
 }
 
+.divModale h3 {
+	height: 51px;
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ea8888;
+	color: white;
+	border-radius: 5px;
+	margin-top: 25px;
+	display: none;
+}
+
 .modale button {
 	width: 237px;
 	height: 36px;
@@ -532,6 +465,7 @@ input[type="submit"] {
 	font-weight: 700;
 	font-family: 'Syne', sans-serif;
 	border-radius: 20px;
+	margin: 0 auto 23px;
 	color: white;
 	cursor: pointer;
 	transition: .2s;
@@ -539,8 +473,6 @@ input[type="submit"] {
 
 .modale .addPicture {
 	background-color: #1D6154;
-	border: solid 1px #1D6154;
-	margin: 0 auto 23px;
 }
 
 .modale .addPicture:hover {
@@ -559,6 +491,10 @@ input[type="submit"] {
 .modale .supGallery:hover {
 	opacity: .7;
 	text-decoration: underline;
+}
+
+.modale .validation {
+	background-color: #A7A7A7;
 }
 
 .pageOne {

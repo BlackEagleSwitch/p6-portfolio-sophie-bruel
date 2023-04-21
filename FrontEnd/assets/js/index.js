@@ -31,68 +31,74 @@ async function main() {
     const dataCategory = await getCategoryAPI();
 
     createFigure(dataWorks, gallery);
-    filters(dataCategory, dataWorks);
-
-    openModale(dataWorks);
+    createFilters(dataCategory, dataWorks);
+    showModale(dataWorks);
 }
 main();
 
-function createFigure(dataWorks, container) {
+function createFigure(dataWorks, container, edit) {
     for (let data of dataWorks) {
         const figure = document.createElement('figure');
-        figure.innerHTML = `
-            <img src="${data.imageUrl}">
-            <figcaption>${data.title}</figcation>
-        `;
+        if (edit === "edit") {
+            figure.innerHTML = `
+                <i class="fas fa-ban"></i>
+                <img src="${data.imageUrl}" alt="Image">
+                <figcaption>éditer</figcaption>
+            `;
+        }
+        else {
+            figure.innerHTML = `
+                <img src="${data.imageUrl}" alt="Image">
+                <figcaption>${data.title}</figcaption>
+            `;
+        }
         container.appendChild(figure);
     }
 }
 
-function filters(dataCategory, dataWorks) {
-    createFilters(dataCategory);
-    const allFilters = divFilters.children;
+function createFilters(dataCategory, dataWorks) {
+    const btnAll = document.createElement('button');
+    btnAll.textContent = "Tous";
+    divFilters.appendChild(btnAll);
 
-    allFilters[0].addEventListener('click', () => {
+    for (let category of dataCategory) {
+        const btn = document.createElement('button');
+        btn.textContent = category.name;
+        divFilters.appendChild(btn);
+    }
+    filters(dataWorks);
+}
+
+function filters(dataWorks) {
+    const buttons = divFilters.children;
+    buttons[0].addEventListener('click', () => {
         gallery.innerHTML = "";
         createFigure(dataWorks, gallery);
-        colorFilters(allFilters[0]);
+        colorsBtn(buttons[0], buttons);
     });
 
-    for (let i = 1; i < allFilters.length; i++) {
-        allFilters[i].addEventListener('click', () => {
+    for (let i = 1; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', () => {
             const newList = dataWorks.filter(function (data) {
                 return data.categoryId === i;
             });
-            colorFilters(allFilters[i]);
+            colorsBtn(buttons[i], buttons);
             gallery.innerHTML = "";
             createFigure(newList, gallery);
         });
     }
 }
 
-function createFilters(dataCategory) {
-    const btnAll = document.createElement('button');
-    btnAll.textContent = "Tous";
-    divFilters.appendChild(btnAll);
-
-    for (let category of dataCategory) {
-        const filter = document.createElement('button');
-        filter.textContent = category.name;
-        divFilters.appendChild(filter);
-    }
-}
-
-function colorFilters(actif) {
-    const allFilters = divFilters.children;
-    for (let btn of allFilters) {
-        btn.style.backgroundColor = "transparent";
+function colorsBtn(actif, buttons) {
+    for (let btn of buttons) {
+        btn.style.backgroundColor = "white";
         btn.style.color = "#1D6154";
     }
     actif.style.backgroundColor = "#1D6154";
     actif.style.color = "white";
 }
 
-function openModale(dataWorks) {
+function showModale(dataWorks) {
     const btnModale = document.querySelector('.btnModale');
     btnModale.addEventListener('click', () => {
         pageOneModale(dataWorks);
@@ -102,63 +108,47 @@ function openModale(dataWorks) {
 function pageOneModale(dataWorks) {
     shadow.style.display = "flex";
     modale.style.display = "flex";
+
     modale.innerHTML = `
         <span>
-            <i class="fa-solid fa-arrow-left"></i>
-            <i class="fa-solid fa-xmark"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-xmark"></i>
         </span>
         <h2>Galerie photo</h2>
         <div class="divModale pageOne"></div>
         <button class="addPicture">Ajouter une photo</button>
         <button class="supGallery">Supprimer la galerie</button>
     `;
-
     const btnReturn = document.querySelector('.fa-arrow-left');
-    btnReturn.style.zIndex = "-2";
-
     const divModale = document.querySelector('.divModale');
-    createFigure(dataWorks, divModale);
+    const btnClose = document.querySelector('.fa-xmark');
+    btnReturn.style.zIndex = "-1";
 
-    const figures = divModale.children;
-    for (let figure of figures) {
-        const del = document.createElement('i');
-        del.className = 'fas fa-ban';
-        figure.appendChild(del);
-    }
-
-    const btnDelete = document.querySelectorAll('.fa-ban');
-    for (let i = 0; i < btnDelete.length; i++) {
-        btnDelete[i].value = dataWorks[i].id;
-    }
-
-    const figuresModale = document.querySelectorAll('.divModale figure figcaption');
-    for (let figcaption of figuresModale) {
-        figcaption.textContent = "éditer";
-    }
-
-    const close = document.querySelector('.fa-xmark');
-    closeModale(shadow, dataWorks);
-    closeModale(close, dataWorks);
-    pageTwoModale(dataWorks);
+    createFigure(dataWorks, divModale, "edit");
+    pageTwo(dataWorks, divModale, btnReturn, btnClose);
+    deleteFigure(dataWorks);
+    closeModale(btnClose);
+    closeModale(shadow);
     deleteGallery();
-    deleteFigure();
 }
 
-function pageTwoModale(dataWorks) {
-    const button = document.querySelector('.addPicture');
-    button.addEventListener('click', () => {
-        const btnReturn = document.querySelector('.fa-arrow-left');
-        const titleModale = document.querySelector('.modale h2');
-        titleModale.textContent = "Ajout photo";
+function pageTwo(dataWorks, divModale, btnReturn, btnClose) {
+    const btnPageTwo = document.querySelector('.addPicture');
+    btnPageTwo.addEventListener('click', () => {
+        const title = document.querySelector('.modale h2');
+        title.textContent = "Ajout photo";
+
+        divModale.classList.remove('pageOne');
+        divModale.classList.add('pageTwo');
         btnReturn.style.zIndex = "0";
-
-        const contModale = document.querySelector('.pageOne');
-        contModale.classList.remove('pageOne');
-        contModale.classList.add('pageTwo');
-
-        const divModale = document.querySelector('.divModale');
         divModale.innerHTML = `
-            <div class="backBlue"></div>
+            <div class="backBlue">
+                <i class="fas fa-image"></i>
+                <b>+ Ajouter photo</b>
+                <p>jpg, png : 4mo max</p>
+                <div class="preview"></div>
+                <input type="file">
+            </div>
             <label>Titre</label>
             <input type="text">
             <label>Catégorie</label>
@@ -167,119 +157,115 @@ function pageTwoModale(dataWorks) {
                 <option value="2">Appartements</option>
                 <option value="3">Hotels & restaurants</option>
             </select>
+            <h3></h3>
         `;
 
-        const btnSupGallery = document.querySelector('.supGallery');
-        btnSupGallery.remove();
-
-        const btnValidation = document.querySelector('.addPicture');
-        btnValidation.style.backgroundColor = "#A7A7A7";
-        btnValidation.style.border = "solid 1px #A7A7A7";
+        const buttons = document.querySelectorAll('.modale button');
+        buttons[0].remove();
+        buttons[1].remove();
+        
+        const btnValidation = document.createElement('button');
+        btnValidation.className = "validation";
         btnValidation.textContent = "Valider";
+        modale.appendChild(btnValidation);
 
-        const backBlue = document.querySelector('.backBlue');
-        backBlue.innerHTML = `
-            <i class="far fa-image"></i>
-            <b>+ Ajouter photo</b>
-            <p>jpg, png : 4mo max</p>
-            <div class="preview"></div>
-            <input type="file">
-        `;
-
-        const close = document.querySelector('.fa-xmark');
         returnPageOne(btnReturn, dataWorks);
-        closeModale(shadow, dataWorks);
-        closeModale(close, dataWorks);
+        closeModale(btnClose);
+        closeModale(shadow);
         addNewFigure();
     });
 }
 
-function deleteFigure() {
-    const allDelete = document.querySelectorAll('.fa-ban');
-    for (let btn of allDelete) {
+function returnPageOne(btnReturn, dataWorks) {
+    btnReturn.addEventListener('click', () => {
+        pageOneModale(dataWorks);
+    });
+}
+
+function closeModale(btn) {
+    btn.addEventListener('click', () => {
+        shadow.style.display = "none";
+        modale.style.display = "none";
+    });
+}
+
+function deleteFigure(dataWorks) {
+    const buttonsDlt = document.querySelectorAll('.fa-ban');
+    for (let i = 0; i < dataWorks.length; i++) {
+        buttonsDlt[i].value = dataWorks[i].id;
+    }
+    for (let btn of buttonsDlt) {
         btn.addEventListener('click', () => {
             const id = btn.value;
-
             fetch(`http://localhost:5678/api/works/${id}`, {
                 method: "DELETE",
-                headers: { "Authorization": `Bearer ${token}` },
+                headers: { "Authorization": `Bearer ${token}` }
             });
         });
     }
-}
+} 
 
 function deleteGallery() {
-    const supGallery = document.querySelector('.supGallery');
-    const allFigure = document.querySelectorAll('.divModale .fa-ban');
-    supGallery.addEventListener('click', () => {
-        for (let value of allFigure) {
-            const id = value.value;
+    const buttonsDlt = document.querySelectorAll('.fa-ban');
+    const btnSupGallery = document.querySelector('.supGallery');
+    btnSupGallery.addEventListener('click', () => {
+        for (let btn of buttonsDlt) {
+            const id = btn.value;
             fetch(`http://localhost:5678/api/works/${id}`, {
                 method: "DELETE",
-                headers: {
-                    accept: "*/*",
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { "Authorization": `Bearer ${token}` }
             });
         }
     });
 }
 
 function addNewFigure() {
-    const btnValidation = document.querySelector('.addPicture');
+    const btnValidation = document.querySelector('.validation');
     const inputFile = document.querySelector('input[type=file]');
 
-    inputFile.addEventListener('change', (input) => {
-        const imgUrl = input.target.files[0];
+    inputFile.addEventListener('change', () => {
+        const imgUrl = inputFile.files[0];
+        const img = document.createElement('img');
+        const btnHide = document.querySelector('b');
+        const preview = document.querySelector('.preview');
+
         btnValidation.style.backgroundColor = "#1D6154";
-        previewImg(imgUrl);
+        btnHide.style.display = "none";
+        preview.style.zIndex = "2";
+        
+        const url = new FileReader();
+        url.readAsDataURL(imgUrl);
+        url.onload = function() {
+            img.src = url.result;
+            preview.appendChild(img);
+        };
     });
 
     btnValidation.addEventListener('click', () => {
-        const img = inputFile.files[0];
-        const category = document.querySelector('select').value;
+        const msgError = document.querySelector('.divModale h3');
+        const imgUrl = document.querySelector('input[type=file]').files[0];
         const title = document.querySelector('.divModale input[type=text]').value;
+        const category = document.querySelector('select').value;
 
-        const data = new FormData();
-        data.append("image", img);
-        data.append("title", title);
-        data.append("category", category);
+        if (imgUrl && title) {
+            const data = new FormData();
+            data.append('image', imgUrl);
+            data.append('title', title);
+            data.append('category', category);
 
-        fetch("http://localhost:5678/api/works", {
-            method: "POST",
-            headers: { "Authorization": `Bearer ${token}` },
-            body: data
-        });
-    });
-}
-
-function previewImg(imgUrl) {
-    const btnHide = document.querySelector('.backBlue b');
-    const preview = document.querySelector('.preview');
-    const img = document.createElement('img');
-    btnHide.style.display = "none";
-    preview.style.zIndex = "2";
-
-    const url = new FileReader();
-    url.readAsDataURL(imgUrl);
-    url.onload = function (url) {
-        img.src = url.target.result;
-        preview.appendChild(img);
-    }
-}
-
-function closeModale(btn, dataWorks) {
-    btn.addEventListener('click', () => {
-        shadow.style.display = "none";
-        modale.style.display = "none";
-        modale.innerHTML = "";
-        openModale(dataWorks);
-    });
-}
-
-function returnPageOne(btn, dataWorks) {
-    btn.addEventListener('click', () => {
-        modale.innerHTML = "";
-        pageOneModale(dataWorks);
+            fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` },
+                body: data
+            });
+        } 
+        else if (!imgUrl || !title) {
+            msgError.textContent = "Image ou Titre manquant";
+            msgError.style.display = "flex";
+        }
+        else {
+            msgError.textContent = "Oups.. il y a un probleme";
+            msgError.style.display = "flex";
+        }
     });
 }
