@@ -4,6 +4,7 @@ const banderolle = document.querySelector('#banderolle');
 const admin = document.querySelectorAll('.admin');
 const modale = document.querySelector('.modale');
 const shadow = document.querySelector('.shadow');
+const logout = document.querySelector('#log');
 
 const token = sessionStorage.getItem('token');
 if (token) {
@@ -12,6 +13,11 @@ if (token) {
     }
     banderolle.style.display = "flex";
     divFilters.style.display = "none";
+    logout.innerHTML = '<a href="#">logout</a>';
+    logout.addEventListener('click', () => {
+        sessionStorage.removeItem('token');
+        window.location.reload();
+    });
 }
 
 async function getWorksAPI() {
